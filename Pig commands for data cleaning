@@ -1,0 +1,25 @@
+A = LOAD 'QueryResults1.csv' USING  PigStorage(',') AS (Id:int, Score:int, ViewCount:int, Body:chararray, OwnerUserId:int, OwnerDisplayName:chararray, Title:chararray, Tags:chararray);
+a = FILTER A BY Id>1; 
+
+B = LOAD 'QueryResults2.csv' USING  PigStorage(',') AS (Id:int, Score:int, ViewCount:int, Body:chararray, OwnerUserId:int, OwnerDisplayName:chararray, Title:chararray, Tags:chararray);
+b = FILTER B BY Id>1;
+
+C = LOAD 'QueryResults3.csv' USING  PigStorage(',') AS (Id:int, Score:int, ViewCount:int, Body:chararray, OwnerUserId:int, OwnerDisplayName:chararray, Title:chararray, Tags:chararray);
+c = FILTER C BY Id>1;
+
+D = LOAD 'QueryResults4.csv' USING  PigStorage(',') AS (Id:int, Score:int, ViewCount:int, Body:chararray, OwnerUserId:int, OwnerDisplayName:chararray, Title:chararray, Tags:chararray);
+d = FILTER D BY Id>1;
+
+E = LOAD 'QueryResults5.csv' USING  PigStorage(',') AS (Id:int, Score:int, ViewCount:int, Body:chararray, OwnerUserId:int, OwnerDisplayName:chararray, Title:chararray, Tags:chararray);
+e = FILTER E BY Id>1;
+
+F = LOAD 'QueryResults6.csv' USING  PigStorage(',') AS (Id:int, Score:int, ViewCount:int, Body:chararray, OwnerUserId:int, OwnerDisplayName:chararray, Title:chararray, Tags:chararray);
+f = FILTER F BY Id>1;
+
+G = UNION a,b,c,d,e,f;
+
+H = DISTINCT G;
+
+STORE H INTO ‘/assignment/FinalData USING PigStorage(‘,’);
+
+hdfs dfs -get /assignment/FinalData/part-r-00000 /home/romil_sakariya2
