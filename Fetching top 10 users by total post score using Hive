@@ -1,0 +1,15 @@
+CREATE DATABASE ctassignment1;
+
+CREATE  EXTERNAL TABLE finaldata (id INT, score INT, viewcount INT, body STRING, owneruserid INT, ownerdisplayname STRING, title STRING, tags STRING) row format delimited fields terminated BY ','; 
+
+LOAD DATA LOCAL INPATH '/home/romil_sakariya2/finaloutput.csv' INTO TABLE finaldata;
+
+create table users1 as select id, score, owneruserid, ownerdisplayname from finaldata WHERE owneruserid IS NOT NULL;
+
+create table userspostsum as SELECT id, score, owneruserid, ownerdisplayname, SUM(score) OVER (PARTITION BY owneruserid ORDER BY owneruserid ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) FROM users1;
+
+Create table temp as select id, score, owneruserid, ownerdisplayname, sum_window_0, row_number() over (partition by owneruserid) as rownumber from userspostsum;
+
+CREATE TABLE tempunique1 AS SELECT id, score, owneruserid, ownerdisplayname, sum_window_0 asscoresum from temp WHERE rownumber=1;
+
+CREATE TABLE task_2_2 AS SELECT id, score, owneruserid, ownerdisplayname, asscoresum totalscoresum from temp order BY totalscoresum DESC LIMIT 10;
