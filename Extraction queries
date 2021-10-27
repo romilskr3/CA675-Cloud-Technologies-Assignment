@@ -1,0 +1,10 @@
+CA675 - Cloud Technologies Assignment 1
+
+Queries ran on the Data Explorer feature of the StackExchange system to extract raw data:
+
+SELECT id, Score, ViewCount, Body, OwnerUserId, OwnerDisplayName, Title, Tags FROM posts where posts.ViewCount>(1000000)
+SELECT id, Score, ViewCount, Body, OwnerUserId, OwnerDisplayName, Title, Tags FROM posts where posts.ViewCount>(125000) AND posts.ViewCount<=(1000000)
+SELECT id, Score, ViewCount, Body, OwnerUserId, OwnerDisplayName, Title, Tags FROM posts where posts.ViewCount>(75000) AND posts.ViewCount<=(125000)
+SELECT id, Score, ViewCount, Body, OwnerUserId, OwnerDisplayName, Title, Tags FROM posts where posts.ViewCount>(55000) AND posts.ViewCount<=(75000)
+SELECT id, Score, ViewCount, Body, OwnerUserId, OwnerDisplayName, Title, Tags FROM posts where posts.ViewCount>(43000) AND posts.ViewCount<=(55000)
+SELECT id, Score, ViewCount, Body, OwnerUserId, OwnerDisplayName, Title, Tags FROM posts where posts.ViewCount>(42000) AND posts.ViewCount<=(43000)
