@@ -1,0 +1,23 @@
+CREATE TABLE lowercased_finaldata (id INT, score INT, viewcount INT, body STRING, owneruserid INT, ownerdisplayname STRING, title STRING, tags STRING);
+
+INSERT INTO lowercased_finaldata (id, score, viewcount, body, owneruserid, ownerdisplayname, title, tags) SELECT id, score, viewcount, LOWER(body), owneruserid, ownerdisplayname, LOWER (title), LOWER(tags) from finaldata;
+
+SELECT * FROM lowercased_finaldata LIMIT 10;
+
+#Cases of the word CLOUD covered in the post's title, body and tags-
+
+CREATE TABLE cloud AS SELECT * FROM lowercased_finaldata WHERE body||title||tags RLIKE 'cloud';
+INSERT INTO cloud SELECT * FROM lowercased_finaldata WHERE body||title||tags RLIKE ' cloud';
+INSERT INTO cloud SELECT * FROM lowercased_finaldata WHERE body||title||tags RLIKE 'cloud ';
+INSERT INTO cloud SELECT * FROM lowercased_finaldata WHERE body||title||tags RLIKE ' cloud ';
+INSERT INTO cloud SELECT * FROM lowercased_finaldata WHERE body||title||tags RLIKE '<cloud>';
+INSERT INTO cloud SELECT * FROM lowercased_finaldata WHERE body||title||tags RLIKE '/cloud';
+INSERT INTO cloud SELECT * FROM lowercased_finaldata WHERE body||title||tags RLIKE '-cloud';
+INSERT INTO cloud SELECT * FROM lowercased_finaldata WHERE body||title||tags RLIKE '-cloud-';
+INSERT INTO cloud SELECT * FROM lowercased_finaldata WHERE body||title||tags RLIKE 'cloud-';
+
+SELECT COUNT(DISTINCT owneruserid) FROM cloud;
+
+CREATE TABLE task2_2_3 (id INT, score INT, viewcount INT, body STRING, owneruserid INT, ownerdisplayname STRING, title STRING, tags STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+
+INSERT INTO task2.2.3 SELECT DISTINCT * FROM cloud;
