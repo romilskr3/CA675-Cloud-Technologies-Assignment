@@ -1,0 +1,11 @@
+H = LOAD 'finaldata.csv' USING  PigStorage(',') AS (Id:int, Score:int, ViewCount:int, Body:chararray, OwnerUserId:int, OwnerDisplayName:chararray, Title:chararray, Tags:chararray);
+
+sorted_by_score = ORDER H BY Score DESC;
+
+task1 = LIMIT sorted_by_score 10;
+
+DUMP task1;
+
+STORE task1 INTO ‘/assignment/task1 USING PigStorage(‘,’);
+
+hdfs dfs -get /assignment/task1/part-r-00000 /home/romil_sakariya2
